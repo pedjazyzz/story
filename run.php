@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require('lib/config.php');
 $cookieData		= explode('|', file_get_contents('./data/'.$cookieFile));
 $cookie 		= $cookieData[0]; // Cookie Instagram
@@ -16,10 +16,8 @@ echo "
 	$---------$--------$
 	
 	\n";
-echo "[o] $$$$$$$$$$ Auto  Story Viewer by Pedja.zyzz $$$$$$$$$$$$$$$$$$ [o]\n";
-echo "  $----$----$ Made by 🤑 @pedja.zyzz 🤑 $----$---$   \n\n";
-echo " Zapratite me na instagramu --😍
- \n\n";
+echo "[o] Auto  Story Viewer [o]\n";
+echo "  Made by @pedja.zyzz   \n\n";
 
 if($cookie){
 	$getakun	= proccess(1, $useragent, 'accounts/current_user/', $cookie);
@@ -28,9 +26,9 @@ if($cookie){
 		//LOSS
 		$getakunV2	= proccess(1, $useragent, 'users/'.$getakun['user']['pk'].'/info', $cookie);
 		$getakunV2	= json_decode($getakunV2[1], true);
-		echo "[~] Login as @".$getakun['user']['username']." \n";
-		echo "[~] [Media : ".$getakunV2['user']['media_count']."] [Follower : ".$getakunV2['user']['follower_count']."] [Following : ".$getakunV2['user']['following_count']."]\n";
-		echo "[~] Please wait 5 second for loading script\n";
+		echo "[~] Prijavljeni ste kao @".$getakun['user']['username']." \n";
+		echo "[~] [Objave : ".$getakunV2['user']['media_count']."] [Pratioci : ".$getakunV2['user']['follower_count']."] [Praćenja : ".$getakunV2['user']['following_count']."]\n";
+		echo "[~] Sačekajte 5 sekundi, da se skripta očita.\n";
 		echo "[~] "; for($x = 0; $x <= 4; $x++){ echo "========"; sleep(1); } echo "\n\n";
 		do {
 			$targets	= file_get_contents('./data/'.$targetFile);
@@ -52,12 +50,12 @@ if($cookie){
 				$prox['user']		= 0;
 				$prox['is_socks5']	= 0;
 				//
-				echo "[~] Get followers of ".$target."\n";
+				echo "[~] Uzmite pratioce od ".$target."\n";
 				//echo "[~] Proxy ".$prox['ip']."\n";
 				$targetid	= json_decode(request(1, $useragent, 'users/'.$target.'/usernameinfo/', $cookie, 0, array(), $prox['ip'], $prox['user'], $prox['is_socks5'])[1], 1)['user']['pk'];
 				$gettarget	= proccess(1, $useragent, 'users/'.$targetid.'/info', $cookie, 0, array(), $prox['ip'], $prox['user'], $prox['is_socks5']);
 				$gettarget	= json_decode($gettarget[1], true);
-				echo "[~] [Media : ".$gettarget['user']['media_count']."] [Follower : ".$gettarget['user']['follower_count']."] [Following : ".$gettarget['user']['following_count']."]\n";
+				echo "[~] [Objave : ".$gettarget['user']['media_count']."] [Pratioci : ".$gettarget['user']['follower_count']."] [Pracenja : ".$gettarget['user']['following_count']."]\n";
 				$jumlah		= $countTarget;
 				if(!is_numeric($jumlah)){
 					$limit = 1;
@@ -88,7 +86,7 @@ if($cookie){
 					endfor;
 					if($req['next_max_id']){ $next = true; $next_id	= $req['next_max_id']; } else { $next = false; $next_id = '0'; }
 				} while(count($listids) <= $limit);
-				echo "[~] ".count($listids)." followers of ".$target." collected\n";
+				echo "[~] ".count($listids)." Pratioca prikupljeno od - ".$target." korisnika..\n";
 				$reels		= array();
 				$reels_suc	= array();
 				for($i = 0; $i < count($listids); $i++):
@@ -110,7 +108,7 @@ if($cookie){
 								if($react_1['status'] == 'ok'){
 									echo "[~] ".date('d-m-Y H:i:s')." - Success polling for ".$stories['id']."\n";
 								}
-								echo "[Stories Polls True : ".$stories['pool_id']." : ".$react_1[1]."] ";
+								echo "[Story sa anketom : ".$stories['pool_id']." : ".$react_1[1]."] ";
 							}
 							if($storyitem['story_questions']){
 								$stories['question_id']	= $storyitem['story_questions'][0]['question_sticker']['question_id'];
@@ -121,13 +119,13 @@ if($cookie){
 								if($react_2['status'] == 'ok'){
 									echo "[~] ".date('d-m-Y H:i:s')." - Question answer for ".$stories['id']." : ".$textAnswer." \n";
 								}
-								echo "[Stories Question True : ".$stories['question_id']." : ".$react_2[1]."] ";
+								echo "[Story sa pitanjem : ".$stories['question_id']." : ".$react_2[1]."] ";
 							}
 							if($storyitem['story_countdowns']){
 								$stories['countdown_id']	= $storyitem['story_countdowns'][0]['countdown_sticker']['countdown_id'];
 								$react_3	  				= proccess(1, $useragent, 'media/'.$stories['countdown_id'].'/follow_story_countdown/', $cookie, 0, array(), $prox['ip'], $prox['user'], $prox['is_socks5']);
 								$react_3					= json_decode($react_3[1], true);
-								echo "[Stories Countdown True : ".$stories['countdown_id']." : ".$react_3[1]."] ";
+								echo "[Story sa odbrojavanjem: ".$stories['countdown_id']." : ".$react_3[1]."] ";
 							}
 							if($storyitem['story_sliders']){
 								$stories['slider_id']	= $storyitem['story_sliders'][0]['slider_sticker']['slider_id'];
@@ -136,34 +134,34 @@ if($cookie){
 								if($react_2['status'] == 'ok'){
 									echo "[~] ".date('d-m-Y H:i:s')." - Success sent slider for ".$stories['id']."\n";
 								}
-								echo "[Stories Slider True : ".$stories['slider_id']." : ".$react_4[1]."] ";
+								echo "[Story sa klizačem : ".$stories['slider_id']." : ".$react_4[1]."] ";
 							}
 							if($storyitem['story_quizs']){
 								$stories['quiz_id']	= $storyitem['story_quizs'][0]['quiz_sticker']['quiz_id'];
 								$react_5	  		= proccess(1, $useragent, 'media/'.$stories['id'].'/'.$stories['quiz_id'].'/story_poll_vote/', $cookie, hook('{"radio_type": "none", "vote": "'.rand(0,3).'"}'));
-								echo "[Stories Quiz True : ".$stories['quiz_id']." : ".$react_5[1]."] ";
+								echo "[Story sa kvizom : ".$stories['quiz_id']." : ".$react_5[1]."] ";
 							}
 							if($viewstory['status'] == 'ok'){
 								$reels_suc[count($reels_suc)] = $storyitem['id']."_".$getstory['reel']['user']['pk'];
-								echo "[~] ".date('d-m-Y H:i:s')." - Seen stories ".$stories['id']." \n";
+								echo "[~] ".date('d-m-Y H:i:s')." - Pregledan Story - ".$stories['id']." \n";
 								saveData('./data/storyData.txt', $stories['reels']);
 								saveData('./data/daily/'.date('d-m-Y').'.txt', $stories['reels']);
 							}
 							sleep($sleep_1);
 						}
 					endforeach;
-					echo "[~] ".date('d-m-Y H:i:s')." - Sleep for ".$sleep_2." second to bypass instagram limit\n"; sleep($sleep_2);
+					echo "[~] ".date('d-m-Y H:i:s')." - Sačekajte ".$sleep_2." sekundi..\n"; sleep($sleep_2);
 				endfor;
-				echo "[~] ".count($reels)." Stori od ".$target." prikupljen\n";
-				echo "[~] ".count($reels_suc)." Stori od ".$target." pregledan\n";
-				echo "[~] ".count($today)." Reagovanih prica danas\n";
-				echo "[~] ".date('d-m-Y H:i:s')." - Sacekajte 30 sekundi\n";
+				echo "[~] ".count($reels)." Stori od ".$target." prikupljeno.\n";
+				echo "[~] ".count($reels_suc)." Stori od ".$target." označeno kao vidjeno.\n";
+				echo "[~] ".count($today)." Reagovanih storija danas.\n";
+				echo "[~] ".date('d-m-Y H:i:s')." - Sačekajte 30 sekundi.\n";
 				echo "[~] "; for($x = 0; $x <= 4; $x++){ echo "========"; sleep(6); } echo "\n\n";
 			}
 			if(count($today) > '1900'){
-				echo "[~] ".count($today)." Reagovanih prica danas\n";
+				echo "[~] ".count($today)." Reagovanih storija danas.\n";
 				echo "[~] Limit instagram api 2000 seen/day\n";
-				echo "[~] Sleep for 20 hours to bypass instagram limit\n";
+				echo "[~] Sacekajte 20h da zaobidjete blok.\n";
 				sleep(72000);
 				echo "[~] End sleep...\n\n";
 			}
