@@ -13,12 +13,13 @@ echo "
 	$---------$--------$
 	
 	\n";
-echo " $$$$$$$$$$ Auto  Story Viewer \n";
-echo "  $-----$----$ Made by @pedja.zyzz $----$---$  \n\n";
-
-echo "[?] Unesite svoje korisničko ime : ";
+echo " $$$$$$$$$$ Auto  Story Viewer by Photolooz $$$$$$$$$$$$$$$$$$   \n";
+echo "  $-----$----$ Made by 🤑 @mohsanjid 🤑 $----$---$  \n\n";
+echo " Subscribe my Youtube channel $ PhotoLooz $ for more videos--😍
+ \n\n";
+echo "[?] Input your instagram username : ";
 $userig    = trim(fgets(STDIN, 1024));
-echo "[?] Unesite vašu šifru : ";
+echo "[?] Input your instagram password : ";
 $passig    = trim(fgets(STDIN, 1024));
 //
 $useragent = generate_useragent();
@@ -40,8 +41,8 @@ if($ext->status == 'ok'){
     $uname       = $ext->logged_in_user->username;
     $uid         = $ext->logged_in_user->pk;
     saveCookie('./data/'.$cookieFile, $cookie."|".$useragent);
-    echo "[+] Uspesna prijava....\n";
-    echo "[+] Podaci sačuvani...\n";
+    echo "[+] Login success....\n";
+    echo "[+] Data saved\n";
 } elseif($ext->error_type == 'checkpoint_challenge_required'){
 	$_SESSION['c_cookie']       = $cookie;
     $_SESSION['c_ua']           = $useragent;
@@ -90,23 +91,23 @@ if($ext->status == 'ok'){
 	            $cookie                 = $cookie;
 	            $useragent              = $challenge_ua;
 	            saveCookie('./data/'.$cookieFile, $cookie."|".$useragent);
-    			echo "[+] Uspešna prijava....\n";
-    			echo "[+] Podaci sačuvani...\n";
+    			echo "[+] Login success....\n";
+    			echo "[+] Data saved\n";
 	        } else {
 	            echo "[!] Cookie die\n";
-	            echo "[!] Izadji...\n";
+	            echo "[!] Exit...\n";
 	        }
 	    }
     } else {
     	echo "[!] Failed sent verification code ".$cekpoint." - ".var_dump($_SESSION)."\n";
-    	echo "[!] Izadji...\n";
+    	echo "[!] Exit...\n";
     	exit();
     }
 } elseif($ext->error_type == 'bad_password'){
-	echo "[!] Pogrešna šifra\n";
-    echo "[!] Izadji...\n";
+	echo "[!] Invalid password\n";
+    echo "[!] Exit...\n";
 } else {
     echo "[!] Unknown error : ".$ext->message."\n";
-    echo "[!] Izadji...\n";
+    echo "[!] Exit...\n";
 }
 ?>
