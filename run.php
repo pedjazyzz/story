@@ -4,7 +4,7 @@ $cookieData		= explode('|', file_get_contents('./data/'.$cookieFile));
 $cookie 		= $cookieData[0]; // Cookie Instagram
 $useragent 		= $cookieData[1]; // Useragent Instagram
 $loop			= true;
-feed/user/{$userId}/story/
+//feed/user/{$userId}/story/
 echo "
  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         🅼🅰🆂🆂 🅻🅾🅾🅺🅴🆁 
